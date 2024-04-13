@@ -14,7 +14,7 @@ export const swaggerSpec = swaggerJsDoc({
         description: 'Local Server',
       },
       {
-        url: 'https://api-chatcuy.vercel.app',
+        url: 'https://api-chat-cuy.vercel.app',
         description: 'Production Server',
       },
     ],

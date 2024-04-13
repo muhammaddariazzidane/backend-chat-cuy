@@ -1,56 +1,35 @@
-import { type Chat } from '../types/chat.type'
-import { prisma } from '../utils/prisma'
+import { type Chat } from '../types/chat.type';
+import { chatModel } from '../models/chat.model';
 
-export const createChat = async ({ message, senderId, receiverId }: Chat) => {
-  return await prisma.chat.create({
-    data: {
-      message,
-      senderId,
-      receiverId,
+export const createChat = async (payload: Chat) => {
+  return await chatModel.create(payload);
+};
+
+export const updateChatById = async (id: string, payload: Chat) => {
+  return await chatModel.findOneAndUpdate(
+    {
+      _id: id,
     },
-  })
-}
+    { $set: payload }
+  );
+};
 
-export const updateChatById = async (id: string, message: string) => {
-  return await prisma.chat.update({
-    where: { id },
-    data: { message },
-  })
-}
-
-export const findChatsBySenderAndReceiver = async (senderId: string, receiverId: string) => {
-  return await prisma.chat.findMany({
-    where: {
-      OR: [
-        {
-          senderId,
-        },
-        { receiverId: senderId, senderId: receiverId },
+export const findChatsBySenderAndReceiver = async (
+  sender: string,
+  receiver: string
+) => {
+  return await chatModel
+    .find({
+      $or: [
+        { sender, receiver },
+        { sender: receiver, receiver: sender },
       ],
-    },
-    include: {
-      receiver: {
-        select: {
-          name: true,
-          email: true,
-          password: false,
-        },
-      },
-      sender: {
-        select: {
-          name: true,
-          email: true,
-          password: false,
-        },
-      },
-    },
-  })
-}
-
+    })
+    .populate('sender', 'name email')
+    .populate('receiver', 'name email');
+};
 export const deleteChatById = async (id: string) => {
-  return await prisma.chat.delete({
-    where: {
-      id,
-    },
-  })
-}
+  return await chatModel.findOneAndDelete({
+    _id: id,
+  });
+};

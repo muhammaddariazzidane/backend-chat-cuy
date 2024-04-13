@@ -1,12 +1,16 @@
-import { Router } from 'express'
-import { deleteMessage, getMessage, sendMessage, updateMessage } from '../controllers/chat.controller'
-import { checkToken } from '../middleware/checkToken.middleware'
+import { Router } from 'express';
+import {
+  getMessage,
+  sendMessage,
+  updateMessage,
+  deleteMessage,
+} from '../controllers/chat.controller';
 
-export const ChatRouter: Router = Router()
+const router = Router();
 
-ChatRouter.use(checkToken)
+router.get('/:id/message', getMessage);
+router.post('/:id/send', sendMessage);
+router.put('/:id/update', updateMessage);
+router.delete('/:id/delete', deleteMessage);
 
-ChatRouter.post('/:id/send', async (req, res) => await sendMessage(req as any, res))
-ChatRouter.get('/:id/message', async (req, res) => await getMessage(req as any, res))
-ChatRouter.put('/:id/update', async (req, res) => await updateMessage(req as any, res))
-ChatRouter.delete('/:id/delete', async (req, res) => await deleteMessage(req as any, res))
+export default router;

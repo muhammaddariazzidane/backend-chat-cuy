@@ -1,10 +1,9 @@
-import { Router } from 'express'
-import { Login, Register } from '../controllers/auth.controller'
-import { checkAuth } from '../middleware/auth.middleware'
+import { Router } from 'express';
+import { Login, Register } from '../controllers/auth.controller';
 
-export const AuthRouter: Router = Router()
+const router = Router();
 
-AuthRouter.use(checkAuth)
+router.post('/login', Login);
+router.post('/register', Register);
 
-AuthRouter.post('/register', Register)
-AuthRouter.post('/login', Login)
+export default router;
