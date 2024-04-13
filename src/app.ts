@@ -25,18 +25,26 @@ app.use('/chat', checkToken, chat)
 
 app.get('/profile', checkToken, (req: Request | any, res: Response) => {
   const user = req.user
-  return res.json({ user })
+  return res.status(200).json({ user })
 })
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.get('/', async (_, res) => {
-  res.json({ message: 'This is Chat Cuy API' })
+  return res.status(200).json({ message: 'This is Chat Cuy API' })
 })
 
 app.get('/users', async (_, res) => {
   const users = await userModel.find({}, 'name email profilePicture')
-  res.json({ users })
+  return res.status(200).json({ users })
+})
+
+app.get('/user/:id', async (req, res) => {
+  const { id } = req.params
+  const user = await userModel.findById({
+    _id: id,
+  })
+  return res.status(200).json({ id, user })
 })
 
 export default app
