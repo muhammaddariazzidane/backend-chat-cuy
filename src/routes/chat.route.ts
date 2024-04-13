@@ -1,16 +1,11 @@
-import { Router } from 'express';
-import {
-  getMessage,
-  sendMessage,
-  updateMessage,
-  deleteMessage,
-} from '../controllers/chat.controller';
+import { Router } from 'express'
+import { getMessage, sendMessage, updateMessage, deleteMessage } from '../controllers/chat.controller'
 
-const router = Router();
+const router = Router()
 
-router.get('/:id/message', getMessage);
-router.post('/:id/send', sendMessage);
-router.put('/:id/update', updateMessage);
-router.delete('/:id/delete', deleteMessage);
+router.get('/:id/message', getMessage)
+router.post('/:id/send', sendMessage)
+router.put('/:id/update', updateMessage)
+router.delete('/:id/delete', deleteMessage)
 
-export default router;
+export default router
