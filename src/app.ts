@@ -6,7 +6,6 @@ import { swaggerSpec } from './swagger'
 import { checkToken } from './middleware/checkToken.middleware'
 import './utils/connection'
 import { userModel } from './models/user.model'
-import { checkAuth } from './middleware/auth.middleware'
 import auth from './routes/auth.route'
 import chat from './routes/chat.route'
 
@@ -20,7 +19,7 @@ app.use(
 )
 app.use(express.json())
 
-app.use('/auth', checkAuth, auth)
+app.use('/auth', auth)
 
 app.use('/chat', checkToken, chat)
 
