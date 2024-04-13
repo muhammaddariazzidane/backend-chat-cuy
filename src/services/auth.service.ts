@@ -14,7 +14,10 @@ export const createUser = async (payload: UserType) => {
 }
 
 export const findUser = async (email: string) => {
-  return await userModel.findOne({
-    email,
-  })
+  return await userModel.findOne(
+    {
+      email,
+    },
+    'name email profilePicture',
+  )
 }

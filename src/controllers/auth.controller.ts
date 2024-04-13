@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 export const Login = async (req: Request, res: Response) => {
   const { email } = req.body
   const user: any = await findUser(email)
+
   if (!user) return res.status(404).json({ message: 'Pengguna Tidak ditemukan' })
 
   try {
@@ -22,7 +23,7 @@ export const Login = async (req: Request, res: Response) => {
       },
       `${process.env.SECRET_KEY}`,
     )
-    return res.status(200).json({ message: 'Login Successfully', token })
+    return res.status(200).json({ message: 'Login Successfully', token, user })
   } catch (error: any) {
     console.error('Internal server error:', error)
     return res.status(500).json({ message: error })
